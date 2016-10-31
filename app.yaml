@@ -1,0 +1,24 @@
+module: default
+runtime: go
+api_version: go1
+
+handlers:
+
+- url: /favicon.jpg
+  mime_type: image/x-icon
+  static_files: public/images/favicon.jpg
+  upload: public/images/favicon.jpg
+
+- url: /images/*
+  static_dir: public/images
+  secure: always
+
+# static files normally don't touch the server that the app runs on but server-side template files
+# needs to be readable by the app. The application_readable option makes sure they are available as
+# part of the app deployment onto the instance.
+- url: /templates
+  static_dir: /templates
+  application_readable: true
+
+- url: /.*
+  script: _go_app
